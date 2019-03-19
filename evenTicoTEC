@@ -26,6 +26,8 @@ ALTER TABLE TicoTEC.conferencia_Sala ADD CONSTRAINT conferenciaSala_PK PRIMARY K
 
 ALTER TABLE TicoTEC.conferencia ADD CONSTRAINT conferenciaSala_FK FOREIGN KEY (idSala) REFERENCES TicoTEC.conferencia_Sala (idSala);
 
+INSERT INTO TicoTEC.conferencia_Sala (idSala,salas) VALUES (1,'Colibri'),(2,'Mariposa'),(3,'La Paz'),(4,'Irazu'),(5,'Barva'),(6,'Tenorio'),(7,'Morpho'),(8,'Poas'),(9,'Rincon'),(10,'Principal');
+
 create table TicoTEC.sala(
 	idSala int NOT NULL,
 	nombreSala varchar(20) NOT NULL,
@@ -53,6 +55,9 @@ ALTER TABLE TicoTEC.sala_CondicionEspecial ADD CONSTRAINT salaCE_PK PRIMARY KEY 
 ALTER TABLE TicoTEC.sala ADD CONSTRAINT salaAC_FK FOREIGN KEY (idAireAcondicionado) REFERENCES TicoTEC.sala_AireAcondicionado (idAireAcondicionado);
 ALTER TABLE TicoTEC.sala ADD CONSTRAINT salaCE_FK FOREIGN KEY (idCondicionEspecial) REFERENCES TicoTEC.sala_CondicionEspecial (idCondicionEspecial);
 
+INSERT INTO TicoTEC.sala_AireAcondicionado (idAireAcondicionado,A_C) VALUES (1,'Si'),(2,'No');
+INSERT INTO TicoTEC.sala_CondicionEspecial (idCondicionEspecial,condicionesEspeciales) VALUES (1,'Si'),(2,'No');
+
 create table TicoTEC.evento(
 	idEvento int NOT NULL,
 	nombreEvento varchar(50) NOT NULL,
@@ -77,8 +82,8 @@ ALTER TABLE TicoTEC.evento ADD CONSTRAINT evento_PK PRIMARY KEY (idEvento);
 ALTER TABLE TicoTEC.evento_Patrocinadores ADD CONSTRAINT eventoPatrocinadores_PK PRIMARY KEY (idPatrocinadores);
 ALTER TABLE TicoTEC.evento_Hotel ADD CONSTRAINT eventoHotel_PK PRIMARY KEY (idHotel);
 
-ALTER TABLE TicoTEC.evento_Patrocinadores ADD CONSTRAINT eventoPatrocinadores_FK FOREIGN KEY (idPatrocinadores) REFERENCES TicoTEC.evento_Patrocinadores (idPatrocinadores);
-ALTER TABLE TicoTEC.evento_Hotel ADD CONSTRAINT eventoHotel_FK FOREIGN KEY (idHotel) REFERENCES TicoTEC.evento_Hotel (idHotel);
+ALTER TABLE TicoTEC.evento ADD CONSTRAINT eventoPatrocinadores_FK FOREIGN KEY (idPatrocinadores) REFERENCES TicoTEC.evento_Patrocinadores (idPatrocinadores);
+ALTER TABLE TicoTEC.evento ADD CONSTRAINT eventoHotel_FK FOREIGN KEY (idHotel) REFERENCES TicoTEC.evento_Hotel (idHotel);
 
 ALTER TABLE MegEstef.vehiculo ADD CONSTRAINT vehiculo_vinConstraint UNIQUE(vin);
 
@@ -94,3 +99,27 @@ create table TicoTEC.hotel(
 );
 
 ALTER TABLE TicoTEC.hotel ADD CONSTRAINT hotel_PK PRIMARY KEY (idHotel);
+
+create table TicoTEC.patrocinadores(
+	contactoEmpresarial int NOT NULL,
+	montoRegalo int NOT NULL,
+	telefono int NOT NULL,
+	idTarjetasRegalo int NOT NULL,
+	idRazonSocial int NOT NULL,
+);
+
+create table TicoTEC.patrocinadores_TarjetasRegalo(
+	idTarjetasRegalo int NOT NULL,
+	cantidad int NOT NULL,
+);
+
+create table TicoTEC.patrocinadores_RazonSocial(
+	idRazonSocial int NOT NULL,
+	razonesSociales varchar(20) NOT NULL,
+);
+
+ALTER TABLE TicoTEC.patrocinadores_TarjetasRegalo ADD CONSTRAINT patrocinadorTR_PK PRIMARY KEY (idTarjetasRegalo);
+ALTER TABLE TicoTEC.patrocinadores_RazonSocial ADD CONSTRAINT patrocinadorRS_PK PRIMARY KEY (idRazonSocial);
+
+ALTER TABLE TicoTEC.patrocinadores ADD CONSTRAINT patrocinadoresTR_FK FOREIGN KEY (idTarjetasRegalo) REFERENCES TicoTEC.evento_Patrocinadores (idPatrocinadores);
+ALTER TABLE TicoTEC.patrocinadores ADD CONSTRAINT patroinadoresRS_FK FOREIGN KEY (idRazonSocial) REFERENCES TicoTEC.patrocinadores_RazonSocial (idRazonSocial);
