@@ -26,41 +26,59 @@ ALTER TABLE TicoTEC.conferencia_Sala ADD CONSTRAINT conferenciaSala_PK PRIMARY K
 
 ALTER TABLE TicoTEC.conferencia ADD CONSTRAINT conferenciaSala_FK FOREIGN KEY (idSala) REFERENCES TicoTEC.conferencia_Sala (idSala);
 
-create table TicoTEC.Sala(
+create table TicoTEC.sala(
 	idSala int NOT NULL,
 	nombreSala varchar(20) NOT NULL,
 	capacidadMax int NOT NULL,
 	cantSalidadE int NOT NULL,
-	tamanoSala inT NOT NULL,
+	tamanoSala int NOT NULL,
 	idAireAcondicionado int NOT NULL,
 	idCondicionEspecial int NOT NULL,
 );
 
-create table TicoTEC.Sala_AireAcondicionado(
+create table TicoTEC.sala_AireAcondicionado(
 	idAireAcondicionado int NOT NULL,
 	A_C varchar(10) NOT NULL,
 );
 
-create table TicoTEC.Sala_CondicionEspecial(
+create table TicoTEC.sala_CondicionEspecial(
 	idCondicionEspecial int NOT NULL,
 	condicionesEspeciales varchar(10) NOT NULL,
 );
 
-create table MegEstef.vehiculo_estado(
-	idEstado int NOT NULL,
-	estados varchar(10) NOT NULL,
+ALTER TABLE TicoTEC.sala ADD CONSTRAINT sala_PK PRIMARY KEY (idSala);
+ALTER TABLE TicoTEC.sala_AireAcondicionado ADD CONSTRAINT salaAC_PK PRIMARY KEY (idAireAcondicionado);
+ALTER TABLE TicoTEC.sala_CondicionEspecial ADD CONSTRAINT salaCE_PK PRIMARY KEY (idCondicionEspecial);
+
+ALTER TABLE TicoTEC.sala ADD CONSTRAINT salaAC_FK FOREIGN KEY (idAireAcondicionado) REFERENCES TicoTEC.sala_AireAcondicionado (idAireAcondicionado);
+ALTER TABLE TicoTEC.sala ADD CONSTRAINT salaCE_FK FOREIGN KEY (idCondicionEspecial) REFERENCES TicoTEC.sala_CondicionEspecial (idCondicionEspecial);
+
+create table TicoTEC.evento(
+	idEvento int NOT NULL,
+	nombreEvento varchar(50) NOT NULL,
+	fechaInicio int NOT NULL,
+	fechaFinal int NOT NULL,
+	calendarioEvento int NOT NULL,
+	idPatrocinadores int NOT NULL,
+	idHotel int NOT NULL,
 );
 
-ALTER TABLE MegEstef.vehiculo ADD CONSTRAINT vehiculo_PK PRIMARY KEY (placa);
-ALTER TABLE MegEstef.vehiculo_color ADD CONSTRAINT color_PK PRIMARY KEY (idColor);
-ALTER TABLE MegEstef.vehiculo_marca ADD CONSTRAINT marca_PK PRIMARY KEY (idMarca);
-ALTER TABLE MegEstef.vehiculo_sedeAgencia ADD CONSTRAINT sedeAgencia_PK PRIMARY KEY (idSedeAgencia);
-ALTER TABLE MegEstef.vehiculo_estado ADD CONSTRAINT estado_PK PRIMARY KEY (idEstado);
+create table TicoTEC.evento_Patrocinadores(
+	idPatrocinadores int NOT NULL,
+	patrocinadores varchar(20) NOT NULL,
+);
 
-ALTER TABLE MegEstef.vehiculo ADD CONSTRAINT vehiculoColor_FK FOREIGN KEY (idColor) REFERENCES MegEstef.vehiculo_color (idColor);
-ALTER TABLE MegEstef.vehiculo ADD CONSTRAINT vehiculoMarca_FK FOREIGN KEY (idMarca) REFERENCES MegEstef.vehiculo_marca (idMarca);
-ALTER TABLE MegEstef.vehiculo ADD CONSTRAINT vehiculoEstado_FK FOREIGN KEY (idEstado) REFERENCES MegEstef.vehiculo_estado (idEstado);
-ALTER TABLE MegEstef.vehiculo ADD CONSTRAINT vehiculosedeAgencia_FK FOREIGN KEY (idSedeAgencia) REFERENCES MegEstef.vehiculo_sedeAgencia (idSedeAgencia);
+create table TicoTEC.evento_Hotel(
+	idHotel int NOT NULL,
+	hoteles varchar(20) NOT NULL,
+);
+
+ALTER TABLE TicoTEC.evento ADD CONSTRAINT evento_PK PRIMARY KEY (idEvento);
+ALTER TABLE TicoTEC.evento_Patrocinadores ADD CONSTRAINT eventoPatrocinadores_PK PRIMARY KEY (idPatrocinadores);
+ALTER TABLE TicoTEC.evento_Hotel ADD CONSTRAINT eventoHotel_PK PRIMARY KEY (idHotel);
+
+ALTER TABLE TicoTEC.evento_Patrocinadores ADD CONSTRAINT eventoPatrocinadores_FK FOREIGN KEY (idPatrocinadores) REFERENCES TicoTEC.evento_Patrocinadores (idPatrocinadores);
+ALTER TABLE TicoTEC.evento_Hotel ADD CONSTRAINT eventoHotel_FK FOREIGN KEY (idHotel) REFERENCES TicoTEC.evento_Hotel (idHotel);
 
 ALTER TABLE MegEstef.vehiculo ADD CONSTRAINT vehiculo_vinConstraint UNIQUE(vin);
 
