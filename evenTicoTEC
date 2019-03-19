@@ -6,18 +6,19 @@ create schema TicoTEC;
 create table TicoTEC.conferencia(
 	idConferencia int NOT NULL,
 	nombreConferencia varchar(20) NOT NULL,
-  costoInscripcion int NOT NULL,
+  	costoInscripcion int NOT NULL,
 	fechaInicio int NOT NULL,
 	fechaFinal int NOT NULL,
 	horaInicio int NOT NULL,
 	horaFinal int NOT NULL,
-	idMarca int NOT NULL,
-	idEstado int NOT NULL,
+	listaParticipantes int NOT NULL,
+	listaOradores int NOT NULL,
+	idSala int NOT NULL,
 );
 
-create table MegEstef.vehiculo_color(
-	idColor int NOT NULL,
-	colores varchar(10) NOT NULL,
+create table TicoTEC.conferencia_Sala(
+	idSala int NOT NULL,
+	salas varchar(20) NOT NULL,
 );
 
 create table MegEstef.vehiculo_marca(
