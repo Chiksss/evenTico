@@ -21,26 +21,35 @@ create table TicoTEC.conferencia_Sala(
 	salas varchar(20) NOT NULL,
 );
 
-create table MegEstef.vehiculo_marca(
-	idMarca int NOT NULL,
-	marcas varchar(10) NOT NULL,
+ALTER TABLE TicoTEC.conferencia ADD CONSTRAINT conferencia_PK PRIMARY KEY (idConferencia);
+ALTER TABLE TicoTEC.conferencia_Sala ADD CONSTRAINT conferenciaSala_PK PRIMARY KEY (idSala);
+
+ALTER TABLE TicoTEC.conferencia ADD CONSTRAINT conferenciaSala_FK FOREIGN KEY (idSala) REFERENCES TicoTEC.conferencia_Sala (idSala);
+
+create table TicoTEC.Sala(
+	idSala int NOT NULL,
+	nombreSala varchar(20) NOT NULL,
+	capacidadMax int NOT NULL,
+	cantSalidadE int NOT NULL,
+	tamanoSala inT NOT NULL,
+	idAireAcondicionado int NOT NULL,
+	idCondicionEspecial int NOT NULL,
 );
 
-create table MegEstef.vehiculo_sedeAgencia(
-	idSedeAgencia int NOT NULL,
-	sedes varchar(10) NOT NULL,
+create table TicoTEC.Sala_AireAcondicionado(
+	idAireAcondicionado int NOT NULL,
+	A_C varchar(10) NOT NULL,
 );
 
-ALTER TABLE MegEstef.vehiculo_sedeAgencia
-ALTER COLUMN sedes varchar(50) not null;
+create table TicoTEC.Sala_CondicionEspecial(
+	idCondicionEspecial int NOT NULL,
+	condicionesEspeciales varchar(10) NOT NULL,
+);
 
 create table MegEstef.vehiculo_estado(
 	idEstado int NOT NULL,
 	estados varchar(10) NOT NULL,
 );
-
-ALTER TABLE MegEstef.vehiculo_estado
-ALTER COLUMN estados varchar(20) not null;
 
 ALTER TABLE MegEstef.vehiculo ADD CONSTRAINT vehiculo_PK PRIMARY KEY (placa);
 ALTER TABLE MegEstef.vehiculo_color ADD CONSTRAINT color_PK PRIMARY KEY (idColor);
